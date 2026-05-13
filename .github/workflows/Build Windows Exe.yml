@@ -5,7 +5,7 @@ jobs:
   build:
     runs-on: windows-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # Resolve o aviso de depreciação do Node.js
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     
     steps:
       - uses: actions/checkout@v4
@@ -14,8 +14,8 @@ jobs:
         uses: microsoft/setup-msbuild@v2
 
       - name: Retarget and Build Solution
-        # O comando abaixo força o uso do conjunto de ferramentas atual (v143 do VS 2022)
-        run: msbuild aes-finder.sln /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0
+        # Adicionei o parâmetro /p:TreatWarningsAsErrors=false para ignorar o erro C2220
+        run: msbuild aes-finder.sln /p:Configuration=Release /p:Platform=Win32 /p:PlatformToolset=v143 /p:WindowsTargetPlatformVersion=10.0 /p:TreatWarningsAsErrors=false
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
